@@ -1,7 +1,6 @@
 import '../assets/css/App.css';
 import React, { useState, useEffect } from 'react';
 import query from '../db/db.js';
-//import Query from './Query';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -29,7 +28,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StorageIcon from '@material-ui/icons/Storage';
 import Checkbox from '@material-ui/core/Checkbox';
-import StarBorder from '@material-ui/icons/StarBorder';
 
 
 const classes = {
@@ -49,12 +47,14 @@ const classes = {
     },
     root: {
         width: '100%',
-        maxWidth: '560',
-        //backgroundColor: theme.palette.background.paper,
+        maxWidth: '560'        
     },
     nested: {
         paddingLeft: '4',
     },
+    error :{
+        color: 'red'
+    }
   }
 
 function InnerLevelList(props) {
@@ -122,7 +122,7 @@ function CollapsibleList(props) {
             query(columnsQuery).then(res => {
                 setTableColumns({columns: res.rows.map(row => row.column_name)});
                 setCheckedColumns(checkedColumns.length === 0 ? res.rows.map((row, i) => i) : checkedColumns);     //initialise
-                onShowTableColumns(selectedTable, tableColumns.columns);
+                onShowTableColumns(selectedTable, tableColumns.columns.filter((column, i) => checkedColumns.indexOf(i) !== -1));
             });
         }
     }, [open]);
@@ -134,26 +134,15 @@ function CollapsibleList(props) {
     const handleTableSelected = event => {
         onTableSelected(event.target.textContent); 
         setSelectedTable(event.target.textContent); 
-        setOpen(!open);
     }
     
-    // const handleCollapse = event => {
-    //     console.log(event.target.parentElement.textContent);        
-    //     setSelectedTable(event.target.parentElement.textContent);
-    //     console.log(selectedTable);
-        
-    // } 
-
-    // const tableCollapsedCallback = (tableColumns) => {
-    //     console.log(tableColumns);        
-    //     onShowTableColumns(selectedTable, tableColumns);  
-    // }
-
-    // useEffect(() => {
-    //     if(open) {
-    //         setChecked(columns.columns.map((column, i) => i));
-    //     }
-    // }, [checkedColumn])
+    const handleCollapse = event => {
+        console.log(event.target.parentElement.textContent);    
+        onTableSelected(event.target.parentElement.textContent);    
+        setSelectedTable(event.target.parentElement.textContent);
+        console.log(selectedTable);      
+        setOpen(!open);  
+    } 
 
     const checboxColumnToggledCallback = newCheckedColumns => {
         setCheckedColumns(newCheckedColumns);
@@ -161,12 +150,12 @@ function CollapsibleList(props) {
 
     return (
         <div>
-            <ListItem button /*selectable="true"*/ onClick={handleTableSelected}>            
-                <ListItemIcon>
+            <ListItem button>            
+                {/* <ListItemIcon>
                     <StorageIcon />
-                </ListItemIcon>
-                <ListItemText primary={dbTable["table_name"]} />
-                {open ? <ExpandLess /*onClick={handleCollapse}*/ /> : <ExpandMore /*onClick={handleCollapse}*/ />}                                
+                </ListItemIcon> */}
+                <ListItemText primary={dbTable["table_name"]} onClick={handleTableSelected}/>
+                {open ? <ExpandLess onClick={handleCollapse} /> : <ExpandMore onClick={handleCollapse} />}                                                
             </ListItem>                     
             <Collapse in={open} timeout="auto" unmountOnExit>                
                 <InnerLevelList columns={tableColumns} checkedColumns={checkedColumns} onCheckboxColumnToggle={checboxColumnToggledCallback}/>
@@ -246,48 +235,6 @@ export default function App() {
     return ( 
         <div style={classes.mainContainer}>
             <div>
-                {/* <TableContainer component={Paper}>
-                    <Table style={classes.table} size="small" aria-label="a dense table">
-                        <TableHead>
-                            <TableRow>
-                            {
-                                <TableCell>Tables</TableCell>
-                                // tableHeaders.map((tableHeader, i) => {
-                                //     return <TableCell key={i}>{tableHeader}</TableCell>
-                                // })
-                            }
-                            </TableRow>
-                        </TableHead>
-                                <TableBody>
-                                {
-                                    tables.map((table, i) => (
-                                        <TableRow selectable="true" key={i}>
-                                        {
-                                            tableHeaders.map((tableHeader,j) => {
-                                                return (
-                                                    <TableCell onClick={handleTableSelected} key={j} align="left">
-                                                        <ExpansionPanel key={i}>
-                                                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>                                            
-                                                            {table[tableHeader]}
-                                                        </ExpansionPanelSummary>
-                                                            <ExpansionPanelDetails>
-                                                                <Typography>
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                                    Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                                                                    eget.
-                                                                </Typography>
-                                                                </ExpansionPanelDetails>
-                                                        </ExpansionPanel>
-                                                    </TableCell>
-                                                )
-                                            })
-                                        }
-                                        </TableRow>                                    
-                                    ))
-                                }
-                                </TableBody>
-                    </Table>
-                </TableContainer> */}
                 <List
                     component="nav"
                     aria-labelledby="nested-list-subheader"
@@ -332,7 +279,7 @@ export default function App() {
                     :
                     (error ?
                     <div>
-                        <p>{error}</p>
+                        <p style={classes.error}>{error}</p>
                     </div>
                     :
                     <div>
@@ -368,8 +315,4 @@ export default function App() {
             </div> 
         </div>
     )
-}
-
-
-//  {/* <Query query={ queryStmt } onExecute={ handleExecuteQuery } onChange={ handleQuery }/>  */}
-        
+}       
