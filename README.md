@@ -12,6 +12,12 @@
 
 GUI client for PostgreSQL DB - to get visual representation of the DB tables and columns.
 
+To help users that are new to SQL queries, selecting a table on the left will generate a SELECT SQL query for this table. Expanding the table (clicking on arrow down) will list the columns of the table and they will be added to the SQL query. Checking/Unchecking the column(s) will amend the SQL query.
+To execute the SQL query, press on "Execute" button.
+To copy the SQL query to the clipboard, press on "Copy to Clipboard" button. 
+The SQL query can be amended manualy and of coarse writen from scratch for more experienced users. 
+Executing the query will either produce a result set in a table or an error in case of errornous SQL query.
+
 ### Table of contents
 
 * [Install](#install)
@@ -46,12 +52,6 @@ or
 ```
 yarn start
 ```
-To help users that are new to SQL queries, selecting a table on the left will generate a SELECT SQL query for this table. Expanding the table (clicking on arrow down) will list the columns of the table and they will be added to the SQL query. Checking/Unchecking the column(s) will amend the SQL query.
-To execute the SQL query, press on "Execute" button.
-To copy the SQL query to the clipboard, press on "Copy to Clipboard" button. 
-The SQL query can be amended manualy and of coarse writen from scratch for more experienced users. 
-Executing the query will either produce a result set in a table or an error in case of errornous SQL query.
-
 
 #### Build the app (automatic)
 
