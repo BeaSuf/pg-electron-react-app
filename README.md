@@ -5,33 +5,24 @@
 </p>
 
 <p align="center">
-  <a href="https://david-dm.org/alexdevero/electron-react-webpack-boilerplate"><img alt="Dependency Status" src="https://david-dm.org/alexdevero/electron-react-webpack-boilerplate.svg?style=flat"></a>
-  <a href="https://david-dm.org/alexdevero/electron-react-webpack-boilerplate?type=dev"><img alt="devDependency Status" src="https://david-dm.org/alexdevero/electron-react-webpack-boilerplate/dev-status.svg?style=flat"></a>
-  <a href="http://opensource.org/licenses/MIT"><img alt="MIT License" src="https://img.shields.io/npm/l/express.svg"></a>
+  <a href="https://david-dm.org/alexdevero/electron-react-webpack-boilerplate">Based on Minimal Electron, React and Webpack boilerplate (by DEVERO)</a>
 </p>
 
-<p align="center">
-  <a href="https://alexdevero.com"><img alt="Built by DEVERO" src="https://img.shields.io/badge/built%20by-DEVERO-brightgreen.svg?colorB=d30320"></a>
-  <a href="https://github.com/alexdevero/electron-react-webpack-boilerplate/releases"><img alt="Current release" src="https://img.shields.io/github/release/alexdevero/electron-react-webpack-boilerplate.svg"></a>
-</p>
+## PG client - Electron, React, Material UI app 
 
-## Minimal Electron, React and Webpack boilerplate
-
-Minimal Electron, React, PostCSS and Webpack boilerplate to help you get started with building your next app.
+GUI client for PostgreSQL DB - to get visual representation of the DB tables and columns.
 
 ### Table of contents
 
 * [Install](#install)
 * [Usage](#usage)
-* [Code of Conduct](#code-of-conduct)
-* [License](#license)
 
 ### Install
 
 #### Clone this repo
 
 ```
-git clone https://github.com/alexdevero/electron-react-webpack-boilerplate.git
+git clone 
 ```
 
 #### Install dependencies
@@ -49,12 +40,18 @@ yarn
 #### Run the app
 
 ```
-npm run start
+npm start
 ```
 or
 ```
 yarn start
 ```
+To help users that are new to SQL queries, selecting a table on the left will generate a SELECT SQL query for this table. Expanding the table (clicking on arrow down) will list the columns of the table and they will be added to the SQL query. Checking/Unchecking the column(s) will amend the SQL query.
+To execute the SQL query, press on "Execute" button.
+To copy the SQL query to the clipboard, press on "Copy to Clipboard" button. 
+The SQL query can be amended manualy and of coarse writen from scratch for more experienced users. 
+Executing the query will either produce a result set in a table or an error in case of errornous SQL query.
+
 
 #### Build the app (automatic)
 
@@ -84,10 +81,3 @@ npm run prod
 yarn prod
 ```
 
-### Code of Conduct
-
-[Contributor Code of Conduct](code-of-conduct.md). By participating in this project you agree to abide by its terms.
-
-### License
-
-MIT © [Alex Devero](https://alexdevero.com).
