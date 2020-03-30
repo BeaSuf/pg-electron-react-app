@@ -58,19 +58,19 @@ const classes = {
   }
 
 function InnerLevelList(props) {
-    const {columns, checked, onCheckboxToggle} = props;
+    const {columns, checkedColumns, onCheckboxColumnToggle} = props;
    
-    const handleToggle = id => () => {
-        const currentIndex = checked.indexOf(id);
-        const newChecked = [...checked];
+    const handleToggleColumn = id => () => {
+        const currentIndex = checkedColumns.indexOf(id);
+        const newCheckedColumns = [...checkedColumns];
 
         if (currentIndex === -1) {
-            newChecked.push(id);
+            newCheckedColumns.push(id);
         } else {
-            newChecked.splice(currentIndex, 1);
+            newCheckedColumns.splice(currentIndex, 1);
         }
         
-        onCheckboxToggle(newChecked);
+        onCheckboxColumnToggle(newCheckedColumns);
     };
     
     return (
@@ -78,14 +78,14 @@ function InnerLevelList(props) {
             <List component="div" disablePadding>
             {
                 columns.columns.map((column, i) => {
-                    const labelId = `checkbox-list-label-${i}`;
+                    const labelId = `checkbox-column-list-label-${i}`;
 
                     return  (
-                        <ListItem key={labelId} button style={classes.nested} dense onClick={handleToggle(i)}>
+                        <ListItem key={labelId} button style={classes.nested} dense onClick={handleToggleColumn(i)}>
                             <ListItemIcon>
                                 <Checkbox
                                     edge="start"
-                                    checked={checked.indexOf(i) !== -1}
+                                    checked={checkedColumns.indexOf(i) !== -1}
                                     tabIndex={-1}
                                     disableRipple
                                     inputProps={{ 'aria-labelledby': labelId }}
@@ -107,7 +107,7 @@ function CollapsibleList(props) {
     const [open, setOpen] = useState(false);
     const [selectedTable, setSelectedTable] =useState('');
     const [tableColumns, setTableColumns] = useState({columns: []})
-    const [checked, setChecked] = useState([]);
+    const [checkedColumns, setCheckedColumns] = useState([]);
         
     useEffect(() => {
         console.log("columns here");
@@ -121,15 +121,15 @@ function CollapsibleList(props) {
             
             query(columnsQuery).then(res => {
                 setTableColumns({columns: res.rows.map(row => row.column_name)});
-                setChecked(checked.length === 0 ? res.rows.map((row, i) => i) : checked);     //initialise
+                setCheckedColumns(checkedColumns.length === 0 ? res.rows.map((row, i) => i) : checkedColumns);     //initialise
                 onShowTableColumns(selectedTable, tableColumns.columns);
             });
         }
     }, [open]);
 
     useEffect(() => {
-        onShowTableColumns(selectedTable, tableColumns.columns.filter((column, i) => checked.indexOf(i) !== -1));
-    }, [checked])
+        onShowTableColumns(selectedTable, tableColumns.columns.filter((column, i) => checkedColumns.indexOf(i) !== -1));
+    }, [checkedColumns])
 
     const handleTableSelected = event => {
         onTableSelected(event.target.textContent); 
@@ -153,15 +153,15 @@ function CollapsibleList(props) {
     //     if(open) {
     //         setChecked(columns.columns.map((column, i) => i));
     //     }
-    // }, [checked])
+    // }, [checkedColumn])
 
-    const checboxToggledCallback = newChecked => {
-        setChecked(newChecked);
+    const checboxColumnToggledCallback = newCheckedColumns => {
+        setCheckedColumns(newCheckedColumns);
     }
 
     return (
         <div>
-            <ListItem button selectable="true" onClick={handleTableSelected}>            
+            <ListItem button /*selectable="true"*/ onClick={handleTableSelected}>            
                 <ListItemIcon>
                     <StorageIcon />
                 </ListItemIcon>
@@ -169,7 +169,7 @@ function CollapsibleList(props) {
                 {open ? <ExpandLess /*onClick={handleCollapse}*/ /> : <ExpandMore /*onClick={handleCollapse}*/ />}                                
             </ListItem>                     
             <Collapse in={open} timeout="auto" unmountOnExit>                
-                <InnerLevelList columns={tableColumns} checked={checked} onCheckboxToggle={checboxToggledCallback}/>
+                <InnerLevelList columns={tableColumns} checkedColumns={checkedColumns} onCheckboxColumnToggle={checboxColumnToggledCallback}/>
             </Collapse>
         </div>
     )
