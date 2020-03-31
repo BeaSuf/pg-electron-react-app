@@ -12,11 +12,11 @@
 
 GUI client for PostgreSQL DB - to get visual representation of the DB tables and columns.
 
-To help users that are new to SQL queries, selecting a table on the left will generate a SELECT SQL query for this table. Expanding the table (clicking on arrow down) will list the columns of the table and they will be added to the SQL query. Checking/Unchecking the column(s) will amend the SQL query.
+To help users that are new to use SQL queries. Left seide of the screen lists the tables of the DB. Selecting a table from that list will generate a "SELECT" SQL query for this table in the Query area. Expanding the table(s) (by clicking on arrow down) will list the columns of the table and they will be added to the SQL query in the Query area. Checking/Unchecking the column(s) will amend the SQL query.
 To execute the SQL query, press on "Execute" button.
 To copy the SQL query to the clipboard, press on "Copy to Clipboard" button. 
-The SQL query can be amended manualy and of coarse writen from scratch for more experienced users. 
-Executing the query will either produce a result set in a table or an error in case of errornous SQL query.
+The SQL query can be amended manualy as well as writen from scratch. 
+Executing the query will either produce a result set or an error in case of erroneous SQL query.
 
 ### Table of contents
 
